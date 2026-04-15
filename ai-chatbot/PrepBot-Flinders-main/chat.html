@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlaceBot — Chat</title>
+    <meta name="description"
+        content="Chat with PlaceBot — your AI placement mentor for HR interviews, resume, aptitude, DSA, and company prep." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="src/style.css" />
+</head>
+
+<body class="chat-body">
+
+    <div class="app-wrapper">
+
+        <!-- ── LEFT SIDEBAR ── -->
+        <aside class="side-panel">
+            <div class="brand">
+                <a href="index.html" class="brand-link" title="Back to home">
+                    <div class="brand-logo">🤖</div>
+                </a>
+                <h1 class="brand-name">PlaceBot</h1>
+                <p class="brand-tagline">Personal Placement Mentor<br />for Engineering Students</p>
+            </div>
+
+            <div class="divider"></div>
+            <p class="panel-label">What I can help with</p>
+
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <span class="fi-icon">🤝</span>
+                    <div><strong>HR Interview Prep</strong>
+                        <p>Common questions, model answers, follow-ups</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="fi-icon">📄</span>
+                    <div><strong>Resume Building</strong>
+                        <p>Bullet points, skills, ATS optimization</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="fi-icon">🧮</span>
+                    <div><strong>Aptitude &amp; Reasoning</strong>
+                        <p>Quantitative, logical, verbal with solutions</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="fi-icon">💻</span>
+                    <div><strong>Technical Rounds</strong>
+                        <p>DSA, algorithms, coding interview questions</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="fi-icon">🗣️</span>
+                    <div><strong>Soft Skills</strong>
+                        <p>Communication, confidence, body language</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="fi-icon">🏢</span>
+                    <div><strong>Company Preparation</strong>
+                        <p>TCS, Infosys, Amazon, Google &amp; more</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="fi-icon">✉️</span>
+                    <div><strong>Email Etiquette</strong>
+                        <p>Offer acceptance, follow-up, negotiation</p>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <!-- API Key -->
+            <div class="api-section">
+                <p class="panel-label">API Key <span class="api-status-badge" id="apiStatusBadge">Not set</span></p>
+                <div class="api-input-row">
+                    <input type="password" id="apiKeyInput" placeholder="Groq / Gemini / OpenAI key…"
+                        autocomplete="off" />
+                    <button id="apiSaveBtn">Save</button>
+                </div>
+                <p class="api-hint">Groq (gsk_…) · Gemini (AIza…) · OpenAI (sk-…)</p>
+            </div>
+        </aside>
+
+        <!-- ── CHAT PANEL ── -->
+        <main class="chat-panel">
+
+            <!-- Header -->
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <span class="ch-dot"></span>
+                    <span class="ch-title">PlaceBot is ready</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light / dark">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <button class="clear-btn" id="clearBtn" title="Clear chat">🗑 Clear</button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions" id="quickActions" role="list">
+                <button class="qa-btn"
+                    data-prompt="Give me 5 common HR interview questions with model answers tailored for engineering freshers.">🤝
+                    HR Interview</button>
+                <button class="qa-btn"
+                    data-prompt="Give me actionable tips to improve my engineering student resume, including bullet point structure, skills section, and project descriptions.">📄
+                    Resume Help</button>
+                <button class="qa-btn"
+                    data-prompt="Give me 3 aptitude questions (quantitative reasoning) commonly asked in campus placements with hints and full solutions.">🧮
+                    Aptitude</button>
+                <button class="qa-btn"
+                    data-prompt="What are the most important DSA topics for technical interviews? Give me one practice question on arrays with a detailed explanation.">💻
+                    Technical Round</button>
+                <button class="qa-btn"
+                    data-prompt="Tell me about TCS NQT recruitment — rounds, difficulty level, key topics, and how to prepare effectively.">🏢
+                    Company Prep</button>
+                <button class="qa-btn"
+                    data-prompt="Write a professional offer acceptance email template suitable for a campus placement offer.">✉️
+                    Offer &amp; Emails</button>
+                <button class="qa-btn"
+                    data-prompt="Give me practical soft skills and body language tips for acing a job interview as an engineering student.">🗣️
+                    Soft Skills</button>
+            </div>
+
+            <!-- Chat Window -->
+            <div class="chat-window" id="chatWindow" role="log" aria-live="polite">
+                <div class="welcome-card" id="welcomeCard">
+                    <div class="wc-emoji">🎯</div>
+                    <h2>Hi! I'm PlaceBot</h2>
+                    <p>Your AI placement mentor for campus placements, technical interviews, HR rounds, and more. Click
+                        a quick-action above or type your question below.</p>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="input-area">
+                <div class="input-row" id="inputRow">
+                    <textarea id="userInput" rows="1" placeholder="Ask about HR prep, resume, DSA, companies…"
+                        aria-label="Chat input"></textarea>
+                    <button class="send-btn" id="sendBtn" aria-label="Send message"
+                        title="Send (Enter)">&#9654;</button>
+                </div>
+                <p class="input-hint">PlaceBot answers placement-related questions only &nbsp;·&nbsp; Press
+                    <kbd>Enter</kbd> to send</p>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="src/theme.js"></script>
+    <script src="src/script.js"></script>
+</body>
+
+</html>
